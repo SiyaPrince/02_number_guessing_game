@@ -118,3 +118,50 @@ def limit_attempts(attempts, max_attempts, generated_number):
         return True
     return False
 
+
+# Function to play game
+
+def play_game(guess, generated_number):
+
+    attempts = 0
+    attempt_limit = 10
+    guess_history = []
+
+    while (guess != generated_number) and (attempts != attempt_limit):
+
+        # Give hint
+        give_hint(guess, generated_number)
+
+        # Ask player's guess
+        guess = get_player_guess()
+
+        record_guess_history(guess=guess, guess_history=guess_history)
+
+        attempts += 1
+        limit_attempts(attempts, attempt_limit, generated_number=generated_number)
+
+    print(guess_history)
+
+    print()
+
+    provide_feedback(guess = guess, generated_number=generated_number)
+    
+#### Main game loop
+
+# Main game function
+
+# Display Welcome
+display_welcome()
+
+# Generate number
+generated_number = generate_random_number()
+
+# Ask player's guess
+guess = get_player_guess()
+
+# Play 1 complete game
+play_game(guess, generated_number)
+
+# Ask to repeat
+
+play_again()
