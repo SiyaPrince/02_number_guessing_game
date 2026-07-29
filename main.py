@@ -155,15 +155,21 @@ def play_game(guess, generated_number):
 # Display Welcome
 display_welcome()
 
-# Generate number
-generated_number = generate_random_number()
+play_again_response = True
 
-# Ask player's guess
-guess = get_player_guess()
+while play_again_response:
 
-# Play 1 complete game
-play_game(guess, generated_number)
+    # Generate number
+    generated_number = generate_random_number()
 
-# Ask to repeat
+    # Ask player's guess
+    guess = get_player_guess()
 
-play_again()
+    # Play 1 complete game
+    play_game(guess, generated_number)
+
+    # Ask to repeat
+
+    play_again_response = play_again()
+
+    print("=" * 45)
