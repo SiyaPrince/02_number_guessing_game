@@ -24,8 +24,6 @@ def generate_random_number():
 def get_player_guess():
     while True:
         try:
-            print("I am thinking of a number ...")
-            print()
             guess = int(input(f"Enter your guess (between {MIN_NUMBER} and {MAX_NUMBER}): "))
             print()
             if validate_guess(guess):
@@ -54,12 +52,12 @@ def give_hint(guess, generated_number): # 80, 100
 
 def guess_lower_hint(guess, generated_number):
 
-    difference = guess - generated_number
+    difference = abs(guess - generated_number)
 
-    if abs(difference) <= 10:
+    if difference <= 10:
         print("You are very close! Guess slightly lower.")
         print()
-    elif abs(difference) <= 20:
+    elif difference <= 20:
         print("You are getting closer. Try a lower number!")
         print()
     else:
@@ -68,13 +66,13 @@ def guess_lower_hint(guess, generated_number):
 
 def guess_higher_hint(guess, generated_number):
 
-    difference = guess - generated_number
+    difference = abs(guess - generated_number)
 
-    if abs(difference) <= 10:
+    if difference <= 10:
         print("You are very close! Guess slightly higher.")
         print()
-    elif abs(difference) <= 20:
-        print("You are geting closer. Try a higher number!")
+    elif difference <= 20:
+        print("You are getting closer. Try a higher number!")
         print()
     else:
         print("Your guess is too low! Try a higher number.")
@@ -82,7 +80,7 @@ def guess_higher_hint(guess, generated_number):
 
 # Provide feedback to the player
 
-def provide_feedback(guess, generated_number):
+def display_win_message(guess, generated_number):
     if guess == generated_number:
         print("Congratulations! You've guessed the correct number!")
         print()
@@ -121,32 +119,45 @@ def limit_attempts(attempts, max_attempts, generated_number):
 
 # Function to play game
 
-def play_game(guess, generated_number):
+def play_game():
+
+    print("I am thinking of a number ...")
+    print()
+
+     # Generate number
+    generated_number = generate_random_number()
 
     attempts = 0
     attempt_limit = 10
     guess_history = []
 
-    while (guess != generated_number) and (attempts != attempt_limit):
+    while attempts < attempt_limit:
+
+        # Get initial guess
+        guess = get_player_guess()
 
         print("=" * 45)
 
-        # Give hint
-        give_hint(guess, generated_number)
-
-        # Ask player's guess
-        guess = get_player_guess()
+        attempts += 1
 
         record_guess_history(guess=guess, guess_history=guess_history)
 
-        attempts += 1
-        limit_attempts(attempts, attempt_limit, generated_number=generated_number)
+        if guess == generated_number:
 
-    print(guess_history)
+            display_win_message(guess = guess, generated_number=generated_number)
+            print(f"You guessed the number in  {attempts} attempts")
+            break
+        elif attempts >= attempt_limit:
+
+            limit_attempts(attempts, attempt_limit, generated_number=generated_number)
+            break
+        else:
+            give_hint(guess, generated_number)
+
+    print("Guess History: ", guess_history)
 
     print()
 
-    provide_feedback(guess = guess, generated_number=generated_number)
     
 #### Main game loop
 
@@ -159,14 +170,8 @@ play_again_response = True
 
 while play_again_response:
 
-    # Generate number
-    generated_number = generate_random_number()
-
-    # Ask player's guess
-    guess = get_player_guess()
-
     # Play 1 complete game
-    play_game(guess, generated_number)
+    play_game()
 
     # Ask to repeat
 
