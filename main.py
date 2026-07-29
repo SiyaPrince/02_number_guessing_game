@@ -129,6 +129,8 @@ def play_game(guess, generated_number):
 
     while (guess != generated_number) and (attempts != attempt_limit):
 
+        print("=" * 45)
+
         # Give hint
         give_hint(guess, generated_number)
 
