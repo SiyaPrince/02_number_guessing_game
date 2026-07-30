@@ -295,7 +295,7 @@ Each project focuses on applying new concepts while reinforcing previous knowled
 
 # 📄 License
 
-This project is licensed under the MIT License.
+This project is intended for learning and portfolio use.
 
 ---
 
